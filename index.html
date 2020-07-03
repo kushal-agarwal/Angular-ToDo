@@ -1,0 +1,597 @@
+ <!-- 
+    # ---------------- About ----------------
+    # 
+    #     An implementation of a basic
+    # 
+    #             TODO LIST WebApp
+    #
+    #       created by Kushal (C) 2020
+    # ........................................
+    #
+    #   Version 1.0.3 
+    # 
+    #  • AngularJS app
+    #  • Documented (JavaScript) Code
+    # 
+    # --------------- Thanks to -------------
+    # 
+  
+    #    for his wonderful AngularJS lesson
+    #    and his suggestions.
+    # 
+    #  @everyone
+    #    for using my humble code :D
+    #  
+    #    If you like it,
+    #           Please Upvote :3
+    # 
+    #    For suggestions or questions, 
+    #           Please leave a comment.
+    # 
+    # ---------------------------------------
+--->
+
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<head>
+    <title>To-Do App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="js/angular.min.js"></script>
+    <script src="js/alertify.js "></script>
+</head>
+<body>
+
+    <header>
+        <h1>To-Do App <small></small></h1>
+        <p>
+            <i class="fa fa-share"></i> 
+            A basic <strong>to-do list</strong> WebApp by <small>Kushal</small>
+        </p>
+    </header>
+
+    <div id="container" ng-controller="main">
+
+        <div class="todo-header clearfix js-toggler" data-target="todo-list">
+            <div class="todo-count">
+                <span>#<strong>{{todos.length}}</strong></span>
+            </div>
+            <h2>
+                <i class="fa fa-navicon"></i> My List
+            </h2>
+        </div>
+    
+        <div class="todo-list js-todo-list">
+            <div class="inner">
+                <div class="item" ng-repeat="todo in todos">
+                    <div class="inner done-{{todo.done}}">
+                        <div class="status">
+                            <input type="checkbox" ng-model="todo.done" />
+                        </div>
+                        <div class="text">
+                            <p>{{todo.text}}</p>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="options">
+                            <span ng-click="edit(todo)" class="btn-edit">
+                                <i class="fa fa-edit"></i> Edit
+                            </span>
+                            <span ng-click="remove(todo)" class="btn-remove">
+                                <i class="fa fa-remove"></i> Remove
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="todo-form">
+            <form ng-submit="add()">
+                <div class="input-group">
+                    <input type="text" ng-model="todoInput" size="25" placeholder="Add new item.." />
+                    <button>
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="dev-notes js-dev-notes hidden">
+        <h3># Dev Notes</h3>
+        <i class="fa fa-tick"></i> No Issues were reported.
+    </div>
+<p>This is my new and diffrent project on compare then other ones. </p> <p> Please co-operrate and tell your other friends about that. Feedback me</p> <a href="">send</a>.
+    <footer>
+   kushal Agarwal©2020
+    <br/>
+    <a href="#"style="text-decoration:none"> <i class="fa fa-instagram"> </i> </a>_
+    <a href="#"><i class="fa fa-github"></i></a>_
+    
+    <a href="#"><i class="fa fa-twitter"></i></a>_
+    </footer>
+<style>
+/*!
+ * To-do App Light Theme
+ * Author: kushal
+ *
+ * Licensed under the MIT License
+ * Copyrights (C) 2020
+ */
+
+
+/** SETUP **/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    /* make 1em = 10px */
+    font-size: 62.5%;
+}
+
+body {
+    background: white;
+    font-family: Roboto, Tahoma, Verdana, sans-serif;
+    font-size: 1.5em;
+    color: #333;
+}
+
+a {
+    color: #20679A;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #407DAF;
+    text-decoration: underline;
+}
+
+input, button, textarea, select, option {
+    font-family: inherit;
+}
+
+input {
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    font-family: 'Century Gothic', Roboto, Tahoma, Verdana, monospace;
+    color: #666;
+}
+
+button {
+    background-color: #306090;
+    border: 1px solid #CCC;
+    color: #E4E4E4;
+    box-shadow: inset 0 -0.5em 1em 0 rgba(40, 40, 40, .2);
+    -moz-box-shadow: inset 0 -0.5em 1em 0 rgba(40, 40, 40, .2);
+    -webkit-box-shadow: inset 0 -0.5em 1em 0 rgba(40, 40, 40, .2);
+}
+
+button:hover {
+    background-color: #F70;
+    color: #DFDFDF;
+}
+
+.input-group {
+    display: inline-block;
+    padding: .1em;
+    background-color: #FFF;
+    border: 1px solid #AAA;
+    border-radius: .4em;
+}
+
+.input-group input, .input-group button {
+    border: 0;
+    outline: 0;
+}
+
+.input-group button {
+    padding: .75em 1em;
+    border-radius: 0 .4em .4em 0;
+}
+
+.input-group input {
+    padding: .75em;
+    border-radius: .4em 0 0 .4em;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.dev-notes {
+    margin: 2em;
+    padding: .5em;
+    border: 0 dashed #CCC;
+    border-width: 1px 0;
+    font-family: Consolas, monospace;
+    font-size: .8em;
+    color: #777;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/** HEADER **/
+
+header {
+    margin: 0 auto 2em;
+    padding: 1.5em;
+    background-color: #306090;
+}
+
+header h1 {
+    margin-bottom: .2em;
+    font-size: 2.1em;
+    color: #DFE3DE;
+}
+
+header p {
+    font-size: .8em;
+    color: #C7E0D3;
+}
+
+header p small {
+    display: inline-block;
+    padding: .2em 0;
+    background-color: #141417;
+    border-radius: .3em;
+}
+
+
+/** CONTAINER **/
+
+#container {
+    margin: .5em;
+    padding: .5em;
+}
+
+.todo-header {
+    margin-bottom: 1.5em;
+    padding: .4em;
+    border-bottom: .1em solid #369;
+}
+
+.todo-header.toggled {
+    border-bottom-style: dashed;
+}
+
+.todo-header h2 {
+    float: left;
+    font-size: 1.9em;
+    color: #369;
+}
+
+.todo-header .todo-count {
+    float: right;
+    margin-top: .75em;
+}
+
+.todo-header .todo-count span {
+    display: inline-block;
+    padding: 0 1em;
+    background-color: #306090;
+    border-radius: .4em;
+    font-family: consolas, monospace;
+    font-size: .7em;
+    color: #EEE;
+}
+
+.todo-list {
+    background-color: #F4F4F7;
+    margin: .5em auto;
+    padding: .3em;
+    border-radius: .3em;
+}
+
+.todo-list > .inner {
+    padding: 1em .5em;
+    background-color: #F1F7F7;
+    border: 2px solid #69A;
+}
+
+.todo-list .item {
+    border-bottom: .1em dashed #C3C6C9;
+}
+
+.todo-list .item:last-child {
+    border: 0;
+}
+
+.todo-list .item .inner {
+    padding: .75em .5em;
+}
+
+.todo-list .item .inner.done-true {
+    background-color: #E0EFDB;
+    color: #409C27;
+}
+
+.todo-list .item .status {
+    float: left;
+    padding: .75em;
+}
+
+.todo-list .item .text {
+    margin-bottom: .5em;
+    padding: .75em;
+}
+
+.todo-list .item .options {
+    margin-right: .2em;
+    text-align: right;
+}
+
+.todo-list .item .options span {
+    display: inline-block;
+    margin: 0 .2em;
+    padding: .25em .4em;
+    border-radius: .4em;
+}
+
+.todo-list .item .options .btn-edit {
+    background-color: #D7DADD;
+    color: #444;
+}
+
+.todo-list .item .options .btn-edit:hover {
+    background-color: #DEE2E5;;
+    color: #666;
+}
+
+.todo-list .item .options .btn-remove {
+    background-color: #E0C0BE;
+    color: #A22;
+}
+
+.todo-list .item .options .btn-remove:hover {
+    background-color: #E4C4C8;
+    color: #C44;
+}
+
+.todo-form {
+    margin: .5em auto;
+    text-align: center;
+}
+
+
+/** FOOTER **/
+
+footer {
+    margin: 2em auto 0;
+    padding: 1.5em;
+    background-color: #000;
+    border-top: .1em solid #CCC;
+    text-align: center;
+    font-size:20px;
+    color: grey;
+}
+
+footer .big {
+    font-size:;
+}
+footer.a{text-decoration:none
+}
+</style>
+<script>
+/*!
+ * To-do App v1.0.3
+ * Author: Kushal
+ *
+ * License: MIT License
+ * Copyrights (C) 2020
+ */
+
+/**
+ * To-do app module
+ * Uses `ngAlertify` as a dependency
+ */
+const app = angular.module('todoApp', ['ngAlertify']);
+
+/**
+ * Main app controller
+ */
+app.controller('main', function($scope, alertify) {
+
+    // Greeting message :D
+    alertify
+    .delay(2000)
+    .success("Welcome!");
+
+    /**
+     * to-do list data
+     */
+    $scope.todos = [
+ ];
+
+    /**
+     * Add a new item
+     */
+    $scope.add = function() {
+
+        const text = $scope.todoInput;
+
+        if (!text)
+            return;
+
+        if (alreadyExist(text)) {
+            alertify
+            .delay(2500)
+            .error("Item already exists!");
+            return;
+        }
+
+        $scope.todos.push({
+            text: text,
+            done: false
+        });
+
+        $scope.todoInput = "";
+    
+        alertify
+        .delay(3000)
+        .success("Item was successfully added!");
+
+    };
+
+    /**
+     * Edit an unfinished item
+     *
+     * @param {Object} item
+     */
+    $scope.edit = function(item) {
+
+        if (item.done) {
+            // items which are done, are ineditable
+            alertify
+            .delay(4000)
+            .error("Cannot edit already finished items!");
+            return;
+        }
+        
+        const msg = "Editing item: `" +item.text+ "`";
+        
+        alertify
+        .defaultValue(item.text)
+        .prompt(msg, function(val, e) {
+            if (val === item.text) {
+
+                alertify
+                .delay(2500)
+                .closeLogOnClick(true)
+                .log("No modification was made.");
+
+            } else if (alreadyExist(val)) {
+
+                alertify
+                .delay(3000)
+                .error("Item already exists!");
+
+            } else if (val) {
+
+                item.text = val;
+                $scope.$apply();
+
+                alertify
+                .delay(2000)
+                .success("Item was successfully edited!");
+
+            } else {
+
+                alertify
+                .delay(3000)
+                .error("Cannot edit your item!");
+
+            }
+        });
+    };
+
+    /**
+     * *Permanentally* remove an item
+     *
+     * @param {Object} item
+     */
+    $scope.remove = function(item) {
+
+        var msg = (item.done === true) ? 
+            "Are you sure you want to delete this item?" : 
+            "You are about to remove an unfinished task.\nAre you sure?";
+
+        alertify
+        .confirm(msg, function() {
+
+            const i = $scope.todos.indexOf(item);
+            $scope.todos.splice(i, 1);
+            $scope.$apply();
+
+            alertify
+            .delay(2000)
+            .success("Item was successfully removed!");
+
+        }, function() {
+    
+            alertify
+            .delay(1500)
+            .log("Operation was aborted.");
+
+        });
+    };
+    
+    /**
+     * Check if an item already exists
+     *
+     * @param {String} itemText
+     * @api private
+     */
+    function alreadyExist(itemText) {
+
+        const duplicates = $scope
+            .todos
+            .filter(function (todo) {
+                return itemText === todo.text;
+            });
+
+        return duplicates.length > 0;
+    }
+});
+
+
+const
+    HIDDEN     =   'hidden', 
+    TOGGLED    =   'toggled';
+
+window.onload = function() {
+
+    var togglers = document
+        .querySelectorAll(".js-toggler[data-target]");
+
+    []
+    .forEach
+    .call(togglers, function(elem) {
+        elem.addEventListener('click',
+            onJsTogglerClicked,
+            false);
+    });
+
+}
+
+/**
+ * Callback for clicking on a toggler
+ *
+ * @param {Event} e
+*/
+function onJsTogglerClicked(e) {
+
+    e.preventDefault();
+
+    var targetName = this
+        .getAttribute('data-target');
+
+    var target = document
+        .querySelector(".js-" + targetName);
+
+    if (target && target.classList) {
+        target.classList.toggle(HIDDEN);
+        /*
+        OR
+        target.style.display = 
+            (target.style.display === "none") 
+                ? "block" 
+                : "none"
+        */;
+        this.classList.toggle(TOGGLED);
+    }
+
+}
+</script>
+</body>
+</html> 
