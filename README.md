@@ -1,9 +1,16 @@
 # Angular-ToDo
+   <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+</head>
+<body>
     <h3>This is a simple todo Angular js list app</h3>
     <h4>It can perform these features;</h4>
     <b>
     <ol>
-    <li>Add todo </li>
+    <li>Add todo</li>
     <li>checkbox which helps to complets todo</li>
     <li>Edit todo before finishing todo</li>
     <li>Delete todo</li>
@@ -27,3 +34,5 @@
    <img src="4.png"></img>
    <br>
    <img src="5.png"></img>
+</body>
+</html>
